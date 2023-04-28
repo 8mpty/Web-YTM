@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="30dp"
+    android:background="@color/grey"
+    android:theme="@style/Theme.MaterialComponents">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp">
+
+        <!--Title Lay-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/web_lay">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dw_title"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:paddingHorizontal="5dp"
+                app:layout_constraintStart_toStartOf="@+id/top_lay"
+                app:layout_constraintTop_toTopOf="@+id/top_lay"
+                app:layout_constraintBottom_toBottomOf="@+id/top_lay"
+                app:layout_constraintEnd_toStartOf="@+id/types">
+            </TextView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:id="@+id/types"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="5dp"
+                android:hint="@string/drop_hint"
+                android:textColorHint="@color/teal_200"
+                app:boxStrokeColor="@color/teal_700"
+                app:endIconTint="@color/teal_200"
+                app:hintTextColor="@color/teal_200"
+                app:layout_constraintTop_toTopOf="@+id/top_lay"
+                app:layout_constraintEnd_toEndOf="@+id/top_lay"
+                app:layout_constraintBottom_toBottomOf="@+id/top_lay"
+                app:layout_constraintStart_toEndOf="@+id/title">
+
+                <AutoCompleteTextView
+                    android:id="@+id/typeTxt"
+                    android:labelFor="@+id/types"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:textSize="13sp"
+                    android:text=" "
+                    android:textColor="@color/white">
+                </AutoCompleteTextView>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--Weblink Layout-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/web_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_lay"
+            app:layout_constraintBottom_toTopOf="@+id/sw_list">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColorHint="@color/teal_200"
+                app:hintTextColor="@color/teal_200"
+                app:helperText="@string/placeholder"
+                app:helperTextTextColor="@color/teal_200"
+                app:boxStrokeColor="@color/teal_700"
+                app:layout_constraintStart_toStartOf="@+id/web_lay"
+                app:layout_constraintEnd_toEndOf="@+id/web_lay"
+                app:layout_constraintTop_toTopOf="@+id/web_lay"
+                app:layout_constraintBottom_toBottomOf="@+id/web_lay">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/link_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textCursorDrawable="@null"
+                    android:cursorVisible="false"
+                    android:hint="@string/weblink"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/prog_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/web_lay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/sw_list">
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!--Remove List-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sw_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/prog_lay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/dw_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="@id/sw_list"
+                app:layout_constraintStart_toStartOf="@+id/sw_list"
+                app:layout_constraintBottom_toBottomOf="@+id/sw_list"/>
+
+            <TextView
+                android:id="@+id/list_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/ls_txt"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/dw_switch"
+                app:layout_constraintBottom_toBottomOf="@id/sw_list"
+                app:layout_constraintTop_toTopOf="@id/sw_list">
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--Remove Feature-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sw_feature"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sw_list">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/dw_switch2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="@id/sw_feature"
+                app:layout_constraintStart_toStartOf="@+id/sw_feature"
+                app:layout_constraintBottom_toBottomOf="@+id/sw_feature"/>
+
+            <TextView
+                android:id="@+id/list_txt2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/ft_txt"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/dw_switch2"
+                app:layout_constraintBottom_toBottomOf="@id/sw_feature"
+                app:layout_constraintTop_toTopOf="@id/sw_feature">
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

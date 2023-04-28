@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            (function() {
+                'use strict';
+
+                  const msg = "HTMLcus"
+                  JS.showDebug(msg);
+            })();
+        </script>
+
+        <script type="text/javascript"
+                src="../scripts/test_cus.js">
+        </script> <!-- Works -->
+
+        <script type="text/javascript"
+                src="/android_asset/scripts/test_cus.js">
+        </script> <!-- Works -->
+
+        <script type="text/javascript"
+                src="file:///android_asset/scripts/test_cus.js">
+        </script> <!-- Works -->
+
+        <script type="text/javascript"
+                src="/data/data/com.empty.simplewebytm/code_cache/.overlay/base.apk/assets/scripts/test_cus.js">
+        </script> <!-- Does not work -->
+
+        <style type="text/css">
+
+            div{
+                width: 300px;
+                margin: auto;
+            }
+
+            .text{
+                text-align: center;
+                color: red;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="div">
+            <h1 class="text">Link not Supported!</h1>
+        </div>
+    </body>
+</html>

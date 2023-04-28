@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.yausername.youtubedl-android:library:master-SNAPSHOT@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1b3b059b3377f97f15642a46d56d2c04/transformed/library-master-SNAPSHOT/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1b3b059b3377f97f15642a46d56d2c04/transformed/library-master-SNAPSHOT/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1b3b059b3377f97f15642a46d56d2c04/transformed/library-master-SNAPSHOT/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.yausername.youtubedl-android/library/master-SNAPSHOT/fa72fde1e9682a4683a37933c421bdb6046690f9/library-master-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

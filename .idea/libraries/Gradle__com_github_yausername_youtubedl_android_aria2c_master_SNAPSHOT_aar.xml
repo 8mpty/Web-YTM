@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.yausername.youtubedl-android:aria2c:master-SNAPSHOT@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/8704a3c549969a8f330563062ea37ab4/transformed/aria2c-master-SNAPSHOT/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8704a3c549969a8f330563062ea37ab4/transformed/aria2c-master-SNAPSHOT/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8704a3c549969a8f330563062ea37ab4/transformed/aria2c-master-SNAPSHOT/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.yausername.youtubedl-android/aria2c/master-SNAPSHOT/e92d4f01154929c2ea5034c85a22da6b12f29f4a/aria2c-master-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

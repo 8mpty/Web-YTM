@@ -1,0 +1,42 @@
+<resources>
+    // APP NAME //
+    <string name="app_name">Web-YTM</string>
+
+
+    // XMLS|LAYOUTS STRING //
+    <string name="tb">Hide Toolbar</string>
+    <string name="refresh">Refresh</string>
+    <string name="service">Foreground Service</string>
+    <string name="immersive">Immersive Mode</string>
+    <string name="incognito">Enable Incognito</string>
+    <string name="share">Share Link</string>
+    <string name="download">Download</string>
+    <string name="other">Settings (Experimental)</string>
+    <string name="dw_title">Download</string>
+    <string name="weblink">Web Link</string>
+    <string name="ls_txt">Remove List</string>
+    <string name="ft_txt">Remove Feature</string>
+    <string name="drop_hint">Type</string>
+
+
+    <string name="placeholder">pLaCeHoLdEr</string>
+    <string name="empty">     </string>
+    // YTMACTIVITY //
+    <string name="url">https://music.youtube.com/</string>
+    <string name="ua">Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36</string>
+    <string name="incognitoText">Incognito Mode</string>
+    <string name="normalText">Normal Mode</string>
+    <string name="errorText">ERROR!</string>
+
+
+    // MISCELLANEOUS //
+    <string-array name="dw_types">
+        <item>Audio</item>
+        <item>Video</item>
+        <item>Video + Audio</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

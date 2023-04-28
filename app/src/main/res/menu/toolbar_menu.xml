@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/ic_refresh_24"
+        app:showAsAction="ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/drop"
+        android:title=""
+        android:icon="@drawable/ic_vert_tool"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/tb"
+                android:title="@string/tb">
+            </item>
+
+            <item
+                android:id="@+id/share"
+                android:title="@string/share"
+                android:icon="@drawable/baseline_ios_share_24"
+                app:showAsAction="ifRoom">
+            </item>
+
+            <item
+                android:id="@+id/download"
+                android:title="@string/download">
+            </item>
+
+            <item
+                android:id="@+id/other"
+                android:title="@string/other">
+                <menu>
+                    <item
+                        android:checkable="true"
+                        android:id="@+id/service"
+                        android:title="@string/service">
+                    </item>
+
+                    <item
+                        android:checkable="true"
+                        android:id="@+id/immersive"
+                        android:title="@string/immersive">
+                    </item>
+
+                    <item
+                        android:checkable="true"
+                        android:id="@+id/incognito"
+                        android:title="@string/incognito">
+                    </item>
+                </menu>
+            </item>
+        </menu>
+    </item>
+
+
+
+</menu>
