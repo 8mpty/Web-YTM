@@ -3,7 +3,6 @@ package com.empty.simplewebytm;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -26,37 +25,26 @@ public class CustomDialogs extends Dialog{
     private final Context context;
     private AlertDialog alertDialog;
     private final AlertDialog.Builder builder;
-
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    private static final String SHARED_PREFS = Const_Prefs.MAIN_SHARED_PREFS;
-    private static final String TOOLBAR = Const_Prefs.TOOLBAR;
-
-
+    private final PrefsManagers pm;
     private EditText txtUrl;
-    SwitchMaterial sw_list,sw_feature;
-    String choice;
-    AutoCompleteTextView actv;
-    private String newUrl;
+    private String choice,newUrl;
     public static String title;
 
     public CustomDialogs(@NonNull Context context) {
         super(context);
         this.context = context;
-
-        pref = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        editor = pref.edit();
         builder = new AlertDialog.Builder(context, R.style.DialogBackground);
-
+        pm = new PrefsManagers(context);
     }
 
     public void HideToolbar() {
         builder.setTitle("Hide Toolbar")
                 .setMessage("! IMPORTANT ! " +
                         "\n\nTo UNHIDE the Toolbar, Long press any blank space. ")
-                .setPositiveButton("OK", (dialog, which) -> editor.putBoolean(TOOLBAR, true).apply())
+                .setPositiveButton("OK", (dialog, which) -> pm.setToolbar(true))
                 .setNegativeButton("Cancel", (dialog, which) -> {
-                    editor.putBoolean(TOOLBAR, false).apply();
+//                    editor.putBoolean(TOOLBAR, false).apply();
+                    pm.setToolbar(false);
                     alertDialog.dismiss();
                 });
 
@@ -79,9 +67,9 @@ public class CustomDialogs extends Dialog{
         ConstraintLayout cl_feature = view.findViewById(R.id.sw_feature);
 
         txtUrl = view.findViewById(R.id.link_txt);
-        sw_list = view.findViewById(R.id.dw_switch);
-        sw_feature = view.findViewById(R.id.dw_switch2);
-        actv = view.findViewById(R.id.typeTxt);
+        SwitchMaterial sw_list = view.findViewById(R.id.dw_switch);
+//        SwitchMaterial sw_feature = view.findViewById(R.id.dw_switch2);
+        AutoCompleteTextView actv = view.findViewById(R.id.typeTxt);
 
 
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(context, R.layout.list_item, context.getResources().getStringArray(R.array.dw_types));

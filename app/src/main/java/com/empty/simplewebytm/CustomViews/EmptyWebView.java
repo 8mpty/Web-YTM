@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,8 +13,8 @@ import android.webkit.WebView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.empty.simplewebytm.Const_Prefs;
 import com.empty.simplewebytm.JavaInterface;
+import com.empty.simplewebytm.PrefsManagers;
 import com.empty.simplewebytm.R;
 import com.empty.simplewebytm.Services.ForegroundService;
 
@@ -24,24 +23,21 @@ public class EmptyWebView extends WebView {
 
     Context context;
     private Intent serviceIntent;
-    private SharedPreferences pref;
-    private static final String SHARED_PREFS = Const_Prefs.MAIN_SHARED_PREFS;
-    private static final String SERVICE = Const_Prefs.SERVICE;
+    private final PrefsManagers pm;
 
-    public EmptyWebView(Context context) {
-        super(context);
-        this.context = context;
-        initStuff();
-    }
+//    public EmptyWebView(Context context) {
+//        super(context);
+//        this.context = context;
+//        pm = new PrefsManagers(context);
+//        initStuff();
+//    }
+//
 
     public EmptyWebView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        pref = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        this.context = context;
+        pm = new PrefsManagers(context);
         initStuff();
-    }
-
-    public EmptyWebView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
     }
 
 
@@ -82,12 +78,12 @@ public class EmptyWebView extends WebView {
 
     @Override
     protected void onWindowVisibilityChanged(int visibility) {
-        if(pref.getBoolean(SERVICE, false)){
+        if(pm.getService()){
             if(visibility == View.VISIBLE){
                 startService();
             }
             startService();
-        }else if(!pref.getBoolean(SERVICE, false)){
+        }else if(!pm.getService()){
             stopServiceAll();
         }
         super.onWindowVisibilityChanged(visibility);

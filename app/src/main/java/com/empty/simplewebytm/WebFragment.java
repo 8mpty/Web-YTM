@@ -75,7 +75,7 @@ public class WebFragment extends Fragment implements SharedPreferences.OnSharedP
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        pref = getContext().getSharedPreferences(Const_Prefs.MAIN_SHARED_PREFS, Context.MODE_PRIVATE);
+        pref = getContext().getSharedPreferences(PrefsManagers.MAIN_SHARED_PREFS, Context.MODE_PRIVATE);
         editor = pref.edit();
 
         View view = inflater.inflate(R.layout.fragment_web, container, false);
@@ -97,8 +97,8 @@ public class WebFragment extends Fragment implements SharedPreferences.OnSharedP
         webView.setWebChromeClient(chromeClient);
 
         webView.setOnLongClickListener(v -> {
-            if(pref.getBoolean(Const_Prefs.TOOLBAR, false)) {
-                editor.putBoolean(Const_Prefs.TOOLBAR, false).apply();
+            if(pref.getBoolean(PrefsManagers.TOOLBAR, false)) {
+                editor.putBoolean(PrefsManagers.TOOLBAR, false).apply();
             }
             return false;
         });
@@ -110,12 +110,12 @@ public class WebFragment extends Fragment implements SharedPreferences.OnSharedP
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(Const_Prefs.INCOGNITO)){
+        if(key.equals(PrefsManagers.INCOGNITO)){
             IncognitoCheck();
         }
     }
     private void IncognitoCheck(){
-        boolean incogBool = pref.getBoolean(Const_Prefs.INCOGNITO, false);
+        boolean incogBool = pref.getBoolean(PrefsManagers.INCOGNITO, false);
         IncognitoMode(incogBool);
     }
 
@@ -131,14 +131,14 @@ public class WebFragment extends Fragment implements SharedPreferences.OnSharedP
 
             //Make sure no autofill for Forms/ user-name password happens for the app
             webView.clearFormData();
-            editor.putBoolean(Const_Prefs.INCOGNITO,true).apply();
+            editor.putBoolean(PrefsManagers.INCOGNITO,true).apply();
             webView.reload();
         }else{
             // Does not delete old history when changed *(NEW FEATURE LMAO)*
             CookieManager.getInstance().setAcceptCookie(true);
             webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             webView.clearCache(false);
-            editor.putBoolean(Const_Prefs.INCOGNITO,false).apply();
+            editor.putBoolean(PrefsManagers.INCOGNITO,false).apply();
             webView.reload();
         }
     }

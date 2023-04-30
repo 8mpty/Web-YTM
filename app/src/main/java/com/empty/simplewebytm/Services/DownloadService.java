@@ -42,7 +42,7 @@ public class DownloadService {
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
 
-    private float newprogress;
+    private float newProgress;
     public DownloadService(Context context) {
         this.context = context;
     }
@@ -97,14 +97,14 @@ public class DownloadService {
     private final Function3<Float, Long, String, Unit> callback = new Function3<Float, Long, String, Unit>() {
         @Override
         public Unit invoke(Float progress, Long o2, String line) {
-            newprogress = progress;
+            newProgress = progress;
             final int max = 100;
             createNotificationChannel();
             downloadNoti(max);
 
             Runnable download = () -> {
-                for(newprogress = 0; newprogress <= max; newprogress++) {
-                    builder.setProgress(max,(int)newprogress,false);
+                for(newProgress = 0; newProgress <= max; newProgress++) {
+                    builder.setProgress(max,(int)newProgress,false);
                     notificationManager.notify(2,builder.build());
                 }
             };

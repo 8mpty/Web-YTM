@@ -3,7 +3,6 @@ package com.empty.simplewebytm.Activities;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -32,11 +31,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.empty.simplewebytm.Checkers.ImmersiveChecker;
 import com.empty.simplewebytm.Checkers.PermissionsChecker;
-import com.empty.simplewebytm.Const_Prefs;
 import com.empty.simplewebytm.CustomDialogs;
 import com.empty.simplewebytm.CustomViews.EmptyWebChromeClient;
 import com.empty.simplewebytm.CustomViews.EmptyWebView;
 import com.empty.simplewebytm.CustomViews.EmptyWebViewClient;
+import com.empty.simplewebytm.PrefsManagers;
 import com.empty.simplewebytm.R;
 import com.empty.simplewebytm.Services.DownloadService;
 import com.empty.simplewebytm.WebFragment;
@@ -54,10 +53,10 @@ public class YTMActivity extends AppCompatActivity
     private TextView txtView;
     private EmptyWebView webView;
     private ProgressBar pb;
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
     private static ConstraintLayout tb_lay;
     private ActivityMainBinding binding;
+
+    private PrefsManagers pm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +74,10 @@ public class YTMActivity extends AppCompatActivity
         tb_lay = findViewById(R.id.topbar);
         ConstraintLayout bottom_lay = findViewById(R.id.bottom_lay);
 
-        pref = getSharedPreferences(Const_Prefs.MAIN_SHARED_PREFS, MODE_PRIVATE);
-        editor = pref.edit();
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
+
+        pm = new PrefsManagers(this);
 
         pb.getProgressDrawable()
                 .setColorFilter(Color.rgb(255,255,255),
@@ -126,20 +125,16 @@ public class YTMActivity extends AppCompatActivity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean servBool = pref.getBoolean(Const_Prefs.SERVICE, false);
-        boolean immBool = pref.getBoolean(Const_Prefs.IMMERSIVE, false);
-        boolean incogBool = pref.getBoolean(Const_Prefs.INCOGNITO, false);
-
         if(menu != null){
-            if(servBool){
+            if(pm.getService()){
                 menu.findItem(R.id.service).setChecked(true);
             }
 
-            if(immBool) {
+            if(pm.getImmersive()) {
                 menu.findItem(R.id.immersive).setChecked(true);
             }
 
-            if(incogBool) {
+            if(pm.getIncognito()) {
                 menu.findItem(R.id.incognito).setChecked(true);
             }
 
@@ -170,17 +165,17 @@ public class YTMActivity extends AppCompatActivity
             case R.id.service:
                 item.setChecked(!item.isChecked());
                 pc.postPerms(requestLauncher);
-                editor.putBoolean(Const_Prefs.SERVICE,item.isChecked()).apply();
+                pm.setService(item.isChecked());
                 return true;
 
             case R.id.immersive:
                 item.setChecked(!item.isChecked());
-                editor.putBoolean(Const_Prefs.IMMERSIVE,item.isChecked()).apply();
+                pm.setImmersive(item.isChecked());
                 return true;
 
             case R.id.incognito:
                 item.setChecked(!item.isChecked());
-                editor.putBoolean(Const_Prefs.INCOGNITO,item.isChecked()).apply();
+                pm.setIncognito(item.isChecked());
                 webView.reload();
                 return true;
 
@@ -223,7 +218,7 @@ public class YTMActivity extends AppCompatActivity
         webView.setOnLongClickListener(v -> {
             if(tb_lay.getVisibility() != View.VISIBLE){
                 tb_lay.setVisibility(View.VISIBLE);
-                editor.putBoolean(Const_Prefs.TOOLBAR, false).apply();
+                pm.setToolbar(false);
             }
             return false;
         });
@@ -249,21 +244,20 @@ public class YTMActivity extends AppCompatActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
-            case Const_Prefs.IMMERSIVE:
+            case PrefsManagers.IMMERSIVE:
                 ImmersiveCheck();
                 break;
-            case Const_Prefs.TOOLBAR:
+            case PrefsManagers.TOOLBAR:
                 ToolbarCheck();
                 break;
-            case Const_Prefs.INCOGNITO:
+            case PrefsManagers.INCOGNITO:
                 IncognitoCheck();
                 break;
         }
     }
 
     private void ToolbarCheck(){
-        boolean tbBool = pref.getBoolean(Const_Prefs.TOOLBAR, false);
-        if(tbBool){
+        if(pm.getToolbar()){
             tb_lay.setVisibility(View.GONE);
         }else{
             tb_lay.setVisibility(View.VISIBLE);
@@ -271,9 +265,8 @@ public class YTMActivity extends AppCompatActivity
     }
 
     private void ImmersiveCheck(){
-        boolean immBool = pref.getBoolean(Const_Prefs.IMMERSIVE, false);
         ImmersiveChecker ims = new ImmersiveChecker();
-        if(immBool){
+        if(pm.getImmersive()){
             ims.hideSystemBars(YTMActivity.this);
         }else{
             ims.showSystemBars(YTMActivity.this);
@@ -281,8 +274,7 @@ public class YTMActivity extends AppCompatActivity
     }
 
     private void IncognitoCheck(){
-        boolean incogBool = pref.getBoolean(Const_Prefs.INCOGNITO, false);
-        IncognitoMode(incogBool);
+        IncognitoMode(pm.getIncognito());
     }
 
     private void IncognitoMode(boolean incognito){
@@ -292,13 +284,13 @@ public class YTMActivity extends AppCompatActivity
             webView.clearHistory();
             webView.clearCache(true);
             webView.clearFormData();
-            editor.putBoolean(Const_Prefs.INCOGNITO, true).apply();
+            pm.setIncognito(true);
             txtView.setText(getString(R.string.incognitoText));
         }else{
             CookieManager.getInstance().setAcceptCookie(true);
             webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             webView.clearCache(false);
-            editor.putBoolean(Const_Prefs.INCOGNITO, false).apply();
+            pm.setIncognito(false);
             txtView.setText(getString(R.string.normalText));
         }
     }
@@ -325,13 +317,13 @@ public class YTMActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        getSharedPreferences(Const_Prefs.MAIN_SHARED_PREFS, MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);
+        getSharedPreferences(PrefsManagers.MAIN_SHARED_PREFS, MODE_PRIVATE).registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        getSharedPreferences(Const_Prefs.MAIN_SHARED_PREFS, Context.MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
+        getSharedPreferences(PrefsManagers.MAIN_SHARED_PREFS, MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
