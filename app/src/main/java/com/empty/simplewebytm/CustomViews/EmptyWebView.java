@@ -20,29 +20,25 @@ import com.empty.simplewebytm.Services.ForegroundService;
 
 public class EmptyWebView extends WebView {
 
-
-    Context context;
+    private Context context;
     private Intent serviceIntent;
-    private final PrefsManagers pm;
+    private PrefsManagers pm;
+    public EmptyWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+    public EmptyWebView(Context context) {
+        super(context);
+    }
 
-//    public EmptyWebView(Context context) {
-//        super(context);
-//        this.context = context;
-//        pm = new PrefsManagers(context);
-//        initStuff();
-//    }
-//
-
-    public EmptyWebView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public EmptyWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         pm = new PrefsManagers(context);
         initStuff();
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
-    private void initStuff(){
+    public synchronized void initStuff(){
         final JavaInterface JI = new JavaInterface(context);
 
         String ua = getResources().getString(R.string.ua);
@@ -65,7 +61,7 @@ public class EmptyWebView extends WebView {
         this.getSettings().setSupportZoom(false);
         this.getSettings().setDisplayZoomControls(false);
         this.getSettings().setDomStorageEnabled(true);
-        this.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
+        this.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         this.getSettings().setMediaPlaybackRequiresUserGesture(false);
         this.getSettings().setUserAgentString(ua);
         this.getSettings().setAllowFileAccess(true);
@@ -85,7 +81,7 @@ public class EmptyWebView extends WebView {
             startService();
         }else if(!pm.getService()){
             stopServiceAll();
-        }
+        }else super.onWindowVisibilityChanged(View.VISIBLE);
         super.onWindowVisibilityChanged(visibility);
     }
 
@@ -97,15 +93,5 @@ public class EmptyWebView extends WebView {
     private void stopServiceAll(){
         serviceIntent = new Intent(getContext(), ForegroundService.class);
         getContext().stopService(serviceIntent);
-    }
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

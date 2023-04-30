@@ -103,7 +103,8 @@
                     android:layout_height="match_parent"
                     android:focusable="true"
                     android:background="@color/black"
-                    android:focusableInTouchMode="true">
+                    android:focusableInTouchMode="true"
+                    android:visibility="visible">
                 </com.empty.simplewebytm.CustomViews.EmptyWebView>
 
             </FrameLayout>

@@ -25,9 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.empty.simplewebytm.Checkers.ImmersiveChecker;
 import com.empty.simplewebytm.Checkers.PermissionsChecker;
@@ -38,8 +35,6 @@ import com.empty.simplewebytm.CustomViews.EmptyWebViewClient;
 import com.empty.simplewebytm.PrefsManagers;
 import com.empty.simplewebytm.R;
 import com.empty.simplewebytm.Services.DownloadService;
-import com.empty.simplewebytm.WebFragment;
-import com.empty.simplewebytm.databinding.ActivityMainBinding;
 import com.yausername.aria2c.Aria2c;
 import com.yausername.ffmpeg.FFmpeg;
 import com.yausername.youtubedl_android.YoutubeDL;
@@ -54,15 +49,12 @@ public class YTMActivity extends AppCompatActivity
     private EmptyWebView webView;
     private ProgressBar pb;
     private static ConstraintLayout tb_lay;
-    private ActivityMainBinding binding;
-
     private PrefsManagers pm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getColor(R.color.black));
-//        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
         init_all();
     }
@@ -86,7 +78,6 @@ public class YTMActivity extends AppCompatActivity
         ToolbarCheck();
         ImmersiveCheck();
         webActivities();
-        fragStuff(false);
 
         try {
             YoutubeDL.getInstance().init(this);
@@ -96,23 +87,6 @@ public class YTMActivity extends AppCompatActivity
             Log.e(TAG, "failed to initialize youtubedl-android", e);
         }
         bottom_lay.setVisibility(View.GONE);
-    }
-    private void fragStuff(boolean enable){
-        if(enable){
-            replaceFragment(new WebFragment());
-            binding.bottomNav.setOnItemSelectedListener(item ->{
-                switch (item.getItemId()){
-
-                    case R.id.home_web:
-                        replaceFragment(new WebFragment());
-                        break;
-                    case R.id.music_player:
-                        Toast.makeText(this, "MusicPlayer", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return true;
-            });
-        }
     }
 
 
@@ -306,12 +280,6 @@ public class YTMActivity extends AppCompatActivity
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         webView.restoreState(savedInstanceState);
-    }
-
-    private void replaceFragment(Fragment fragment){
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frag_frame, fragment).commit();
     }
 
     @Override

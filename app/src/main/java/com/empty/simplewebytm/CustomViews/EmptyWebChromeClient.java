@@ -9,7 +9,6 @@ public class EmptyWebChromeClient extends WebChromeClient {
     private final Context context;
     private ProgressBar pb;
 
-
     public EmptyWebChromeClient(Context context, ProgressBar pb) {
         this.context = context;
         this.pb = pb;
